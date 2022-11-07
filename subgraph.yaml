@@ -1,0 +1,29 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: EthListDAO
+    network: goerli
+    source:
+      address: "0xE00AfA06Aed49086F3C16831773A2DA9c763d8B0"
+      abi: EthListDAO
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - GeoNodeAdded
+        - NewOwner
+        - NewPendingOwner
+      abis:
+        - name: EthListDAO
+          file: ./abis/EthListDAO.json
+      eventHandlers:
+        - event: GeoNodeAdded(indexed address,string,string,string)
+          handler: handleGeoNodeAdded
+        - event: NewOwner(indexed address,indexed address)
+          handler: handleNewOwner
+        - event: NewPendingOwner(indexed address,indexed address)
+          handler: handleNewPendingOwner
+      file: ./src/eth-list-dao.ts

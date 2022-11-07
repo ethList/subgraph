@@ -12,6 +12,10 @@ export function handleChildAdded(event: ChildAdded): void {
   node.index = event.params.id;
   node.createdAtBlockNumber = event.block.number;
   node.createdAtTimestamp = event.block.timestamp;
+
+  let parentNode = Node.load(event.params.parent.toHex()) as Node;
+  node.path = parentNode.path.concat("-").concat(node.name);
+
   node.save();
 
   NodeTemplate.create(event.params.child);

@@ -5,6 +5,7 @@ import { EthListNode as NodeTemplate } from "../generated/templates";
 
 export function handleGeoNodeAdded(event: GeoNodeAdded): void {
   let node = new Node(event.params.node.toHex());
+  node.path = event.params.name;
   node.isLeaf = false;
   node.name = event.params.name;
   node.tag = event.params.tag;

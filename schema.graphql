@@ -1,5 +1,6 @@
 type Node @entity {
   id: ID!
+  path: String!
   isLeaf: Boolean!
   index: BigInt!
   parent: Node

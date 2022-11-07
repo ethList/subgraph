@@ -1,6 +1,12 @@
-type ExampleEntity @entity {
+type Node @entity {
   id: ID!
-  count: BigInt!
-  node: Bytes! # address
-  name: String! # string
+  isLeaf: Boolean!
+  index: BigInt!
+  parent: Node
+  children: [Node!] @derivedFrom(field: "parent")
+  name: String!
+  tag: String!
+  childrenTag: String!
+  createdAtTimestamp: BigInt!
+  createdAtBlockNumber: BigInt!
 }

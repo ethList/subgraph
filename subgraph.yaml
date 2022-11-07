@@ -8,22 +8,38 @@ dataSources:
     source:
       address: "0xE00AfA06Aed49086F3C16831773A2DA9c763d8B0"
       abi: EthListDAO
+      startBlock: 7866344
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
+      file: ./src/eth-list-dao.ts
       entities:
-        - GeoNodeAdded
-        - NewOwner
-        - NewPendingOwner
+        - Node
       abis:
         - name: EthListDAO
           file: ./abis/EthListDAO.json
+        - name: EthListNode
+          file: ./abis/EthListNode.json
       eventHandlers:
         - event: GeoNodeAdded(indexed address,string,string,string)
           handler: handleGeoNodeAdded
-        - event: NewOwner(indexed address,indexed address)
-          handler: handleNewOwner
-        - event: NewPendingOwner(indexed address,indexed address)
-          handler: handleNewPendingOwner
-      file: ./src/eth-list-dao.ts
+templates:
+  - kind: ethereum
+    name: EthListNode
+    network: goerli
+    source:
+      abi: EthListNode
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/eth-list-node.ts
+      entities:
+        - Node
+      abis:
+        - name: EthListNode
+          file: ./abis/EthListNode.json
+      eventHandlers:
+        - event: ChildAdded(indexed address,indexed address,string,string,string,uint256)
+          handler: handleChildAdded
